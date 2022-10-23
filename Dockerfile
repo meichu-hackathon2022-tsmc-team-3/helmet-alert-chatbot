@@ -1,11 +1,16 @@
-FROM node:alpine
+FROM node:lts-alpine
 
 WORKDIR /app
+
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git
 
 COPY package.json .
 
 RUN npm install
 
-# COPY src /app/src
+EXPOSE 3000
 
-CMD ['npm', 'run', 'start']
+COPY src /app/src
+
+CMD ["npm", "start"]
